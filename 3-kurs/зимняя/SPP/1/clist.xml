@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!-- File Name: clist.xml -->
+<?xml-stylesheet type="text/css" href="clist.css"?>
+<CLST>
+<COMMAND>
+<TITLE>Реал Мадрид</TITLE>
+<COUNTRY>Great Britain</COUNTRY>
+<PEOPLE>27</PEOPLE>
+<WINS>298</WINS>
+<COST>$3.49M</COST>
+<DOP1>Абрамович</DOP1>
+<DOP2>Яхта</DOP2>
+</COMMAND>
+<COMMAND>
+<TITLE>ФК «Барселона»</TITLE>
+<COUNTRY>France</COUNTRY>
+<PEOPLE>28</PEOPLE>
+<WINS>311</WINS>
+<COST>$15.49M</COST>
+<DOP1>Иванов</DOP1>
+<DOP2>Дворец</DOP2>
+</COMMAND>
+<COMMAND>
+<TITLE>Манчестер Юнайтед</TITLE>
+<COUNTRY>Sweden</COUNTRY>
+<PEOPLE>26</PEOPLE>
+<WINS>221</WINS>
+<COST>$25.49M</COST>
+<DOP1>Петров</DOP1>
+<DOP2>Автобус</DOP2>
+</COMMAND>
+<COMMAND>
+<TITLE>ФК Ювентус</TITLE>
+<COUNTRY>Russia</COUNTRY>
+<PEOPLE>30</PEOPLE>
+<WINS>167</WINS>
+<COST>$11.49M</COST>
+<DOP1>Сидоров</DOP1>
+<DOP2></DOP2>
+</COMMAND>
+<COMMAND>
+<TITLE>ФК "Бавария"</TITLE>
+<COUNTRY>Poland</COUNTRY>
+<PEOPLE>34</PEOPLE>
+<WINS>345</WINS>
+<COST>$67.49M</COST>
+<DOP1>Громыко</DOP1>
+<DOP2>Мотоцикл</DOP2>
+</COMMAND>
+</CLST>

@@ -1,0 +1,11 @@
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\bin\x64\Debug\ADO4WinForms.exe.config
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\bin\x64\Debug\ADO4WinForms.exe
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\bin\x64\Debug\ADO4WinForms.pdb
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.csproj.AssemblyReference.cache
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.csproj.SuggestedBindingRedirects.cache
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.Form1.resources
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.Properties.Resources.resources
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.csproj.GenerateResource.cache
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.csproj.CoreCompileInputs.cache
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.exe
+D:\UNIVER\3-kurs\зимняя\ADO\ADO4WinForms\obj\x64\Debug\ADO4WinForms.pdb
