@@ -24,14 +24,16 @@
             <Button Name="Undo" ToolTip="Отменить редактирование/создание" Margin="5,2,5,2">
                 <Image Source="/s26.png" />
             </Button>
-            
+
         </ToolBar>
+        <Image Height="180" Source="/a20.jpg" Stretch="Fill" Width="212"/>
+        <Image Height="111" Source="/Image1.png" Stretch="Fill" Width="209"/>
 
 
-        <TextBlock HorizontalAlignment="Left" Margin="15,150,0,0" TextWrapping="Wrap" Height="21">
+        <!--<TextBlock HorizontalAlignment="Left" Margin="15,150,0,0" TextWrapping="Wrap" Height="21">
              <Hyperlink NavigateUri="PageMain.xaml">Текст Гиперссылки</Hyperlink>
-        </TextBlock>
-       
+        </TextBlock>-->
+
 
     </StackPanel>
 </Window>
