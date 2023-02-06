@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE note [
+<!ELEMENT note (message+,outcome+)>
+<!ELEMENT outcome (data, number,whom)>
+<!ELEMENT message (number)
+<note 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="3.xsd"> 
+<message number="10" date="2009-10-29" from="Ольга Петрова">
+20
+Не забудь купить молоко по дороге с работы домой
+</message>
+</note>
+Схема XSD(3.xsd): 
+<?xml version="1.0" encoding="Windows-1251"?>
+<xsd:schema 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"> 
+<xsd:complexType name="messageType">
+<xsd:simpleContent>
+<xsd:restriction base="xsd:string">
+<xsd:attribute name="number" type="xsd:integer" 
+use="required"/>
+<xsd:attribute name="date" type="xsd:date" use="required"/>
+<xsd:attribute name="from" type="xsd:string" use="required"/>
+</xsd:restriction>
+</xsd:simpleContent>
+</xsd:complexType>
+<xsd:element name="note">
+<xsd:complexType> 
+<xsd:sequence>
+<xsd:element name="message" type="messageType"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

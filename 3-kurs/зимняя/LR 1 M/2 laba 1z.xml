@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE example SYSTEM "example.dtd">
+<example> Это внешняя схема </example>
+<!DOCTYPE note 
+<!ELEMENT source (дочерний_элемент,EMPTY,#IMPLIED)>>
+<!ELEMENT note (message+, outcome+)>
+<!ELEMENT message (#PCDATA)>
+<!ATTLIST source
+  delivery ID (e-mail|телефон|лично)> 
+ number ID #REQUIRED>
+<!ATTLIST message 
+ number ID #REQUIRED 
+ from CDATA #REQUIRED
+ alert ("нормально") #IMPLIED>
+<!ELEMENT outcome (#PCDATA)>
+<!ATTLIST outcome
+ msg IDREF #IMPLIED>
+<!ENTITY today "26.01.23"> 
+ > 
+<note> 
+ <message number="a1" from="Ольга Петрова" 
+alert="несрочно"> 
+ today; Не забудь купить молоко по дороге с работы 
+домой </message> 
+ <message number="a2" from="Саша Петров" 
+alert="срочно"> 
+today; Помоги мне сделать домашнее задание 
+</message> 
+ <message number="a3" from="Кристина Петрова"> 
+ &today; Поиграй со мной</message> 
+ <outcome msg="a1">Хорошо, я зайду в магазин</outcome> 
+ <outcome msg="a2">Обязательно помогу</outcome> 
+ <outcome msg="a3">Конечно, поиграю</outcome>
+</note>
