@@ -144,5 +144,22 @@ namespace ZAPRET
         {
 
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.FileName = "Yandex.exe";
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            string filename = openFileDialog1.FileName;
+            textBox3.Text = filename;
+            Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "Wallpaper", textBox3.Text);
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            // https://ru.begin-it.com/8950-prevent-users-changing-date-time-windows-10
+            
+        }
     }
 }
