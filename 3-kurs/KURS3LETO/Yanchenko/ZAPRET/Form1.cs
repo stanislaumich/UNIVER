@@ -23,6 +23,8 @@ namespace ZAPRET
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "Yandex.exe";
+            openFileDialog1.DefaultExt = ".exe";
+            openFileDialog1.Filter = "EXE files (.exe)|*.exe";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             string filename = openFileDialog1.FileName;
