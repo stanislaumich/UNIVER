@@ -46,8 +46,8 @@
             this.button8 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -218,6 +218,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Запрет изменения времени";
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(114, 19);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(96, 24);
+            this.button10.TabIndex = 2;
+            this.button10.Text = "Разрешить";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(12, 19);
@@ -228,20 +237,11 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(114, 19);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(96, 24);
-            this.button10.TabIndex = 2;
-            this.button10.Text = "Разрешить";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 548);
+            this.ClientSize = new System.Drawing.Size(509, 495);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
