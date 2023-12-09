@@ -1,2 +1,0 @@
-java MainOtdel.class
-pause

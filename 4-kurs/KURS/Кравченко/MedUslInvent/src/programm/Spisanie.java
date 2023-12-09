@@ -11,10 +11,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class Zakaz extends javax.swing.JFrame {
+/**
+ *
+ * @author Lz42
+ */
+public class Spisanie extends javax.swing.JFrame {
 
     String oldName = "";
 
@@ -31,15 +34,17 @@ public class Zakaz extends javax.swing.JFrame {
             conn = DriverManager.getConnection(url);
             Statement stmt = null;
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS ZAKAZ("
+            String sql = "CREATE TABLE IF NOT EXISTS PRODA("
                     + " ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + " TOVID            TEXT    NOT NULL, "
                     + " NUM           INTEGER, "
                     + " SKLADID           TEXT, "
                     + " DT           TEXT, "
-                    + " ZAKID           TEXT, STATUS TEXT)";
+                    + " ZAKID           TEXT"
+                    + "    price   REAL, "
+                    + "    summa   REAL"
+                    + ")";
             stmt.executeUpdate(sql);
-
             stmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -68,34 +73,31 @@ public class Zakaz extends javax.swing.JFrame {
             conn = DriverManager.getConnection(url);
             Statement stmt = null;
             createtable();
-
             stmt = conn.createStatement();
-            String sql = "select count(*) C from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z, STATUS st WHERE "
-                    + "P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID and st.id = P.status ";
+            String sql = "select count(*) C from PRODA P, TOVAR T, SKLAD S, ZAK Z WHERE "
+                    + "P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID";
             ResultSet rs = stmt.executeQuery(sql);
             int rowcount = rs.getInt("C");
-            sql = "select t.id id, T.Name Name, p.num num, s.name sklad, p.dt dtt, z.name zname, st.name w, "
-                    + "p.id zid from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z, STATUS st "
-                    + "WHERE P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID and st.id=P.status ";
+            sql = "select T.Name Name, p.num num, s.name sklad, p.dt dt, z.name zname, p.id id, p.price price, p.summa summa from PRODA P, TOVAR T, SKLAD S, ZAK Z \n"
+                    + "WHERE P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID";
             rs = stmt.executeQuery(sql);
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.setRowCount(rowcount);
             int i = 0;
             while (rs.next()) {
                 jTable1.setValueAt(rs.getString("NAME"), i, 0);
-                jTable1.setValueAt(rs.getString("NUM"), i, 1);
-                jTable1.setValueAt(rs.getString("SKLAD"), i, 2);
-                jTable1.setValueAt(rs.getString("DTT"), i, 3);
-                jTable1.setValueAt(rs.getString("ZNAME"), i, 4);
-                jTable1.setValueAt(rs.getString("W"), i, 5);
-                jTable1.setValueAt(rs.getString("ID"), i, 6);
-                jTable1.setValueAt(rs.getString("zID"), i, 7);
-                //jTable1.setValueAt(rs.getString("zID"), i, 8);
+                jTable1.setValueAt(rs.getString("price"), i, 1);
+                jTable1.setValueAt(rs.getString("num"), i, 2);
+                jTable1.setValueAt(rs.getString("summa"), i, 3);
+                jTable1.setValueAt(rs.getString("sklad"), i, 4);
+                jTable1.setValueAt(rs.getString("dt"), i, 5);
+                jTable1.setValueAt(rs.getString("ZNAME"), i, 6);
+                jTable1.setValueAt(rs.getString("ID"), i, 7);
                 i++;
             }
-//++++++++++++
+            //+++++++++++++
             jComboBox1.removeAllItems();
-            sql = "select * from POST";
+            sql = "select * from TOVAR";
             rs = stmt.executeQuery(sql);
             i = 0;
             while (rs.next()) {
@@ -104,24 +106,24 @@ public class Zakaz extends javax.swing.JFrame {
             }
             stmt.close();
 
-            //++++++++++++
-            jComboBox3.removeAllItems();
+            //+++++++++++++
+            jComboBox2.removeAllItems();
             sql = "select * from SKLAD";
             rs = stmt.executeQuery(sql);
             i = 0;
             while (rs.next()) {
-                jComboBox3.addItem(rs.getString("NAME"));
+                jComboBox2.addItem(rs.getString("NAME"));
                 i++;
             }
             stmt.close();
 
-            //++++++++++++
-            jComboBox2.removeAllItems();
-            sql = "select * from TOVAR";
+            //+++++++++++++
+            jComboBox3.removeAllItems();
+            sql = "select * from ZAK";
             rs = stmt.executeQuery(sql);
             i = 0;
             while (rs.next()) {
-                jComboBox2.addItem(rs.getString("NAME"));
+                jComboBox3.addItem(rs.getString("NAME"));
                 i++;
             }
             stmt.close();
@@ -139,19 +141,14 @@ public class Zakaz extends javax.swing.JFrame {
         }
     }
 
-    public Zakaz() {
+    public Spisanie() {
         initComponents();
-        setTitle("Заказы");
+        setTitle("Списание оборудования");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         filltable();
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,25 +156,32 @@ public class Zakaz extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Товар", "Количество", "Склад", "Дата", "Покупатель", "Статус", "ID", "ZID"
+                "Товар", "Цена", "Кол-во", "Сумма", "Склад", "Дата", "Покупатель", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -202,96 +206,129 @@ public class Zakaz extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Поставщик");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel2.setText("Товар:");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel3.setText("Количество:");
-
-        jTextField1.setText("0");
-
-        jLabel4.setText("Место");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton2.setText("Записать заказ");
+        jButton2.setText("Записать");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Удалить заказ");
+        jButton3.setText("Удалить");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox1PropertyChange(evt);
+            }
+        });
+
+        jLabel1.setText("Товар:");
+
+        jLabel2.setText("Цена:");
+
+        jTextField1.setText("0");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("0");
+
+        jLabel4.setText("Кол-во:");
+
+        jLabel5.setText("Сумма:");
+
+        jLabel6.setText("0");
+
+        jLabel7.setText("Место:");
+
+        jLabel8.setText("Утилизатор");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBox2, 0, 302, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, 0, 245, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton3))
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         pack();
@@ -302,8 +339,7 @@ public class Zakaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Записать заказ
-
+        // Записать продажу
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -316,7 +352,7 @@ public class Zakaz extends javax.swing.JFrame {
             String url = "jdbc:sqlite:base.sqlite";
             conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            String sql = "select * from TOVAR where name='" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()) + "'";
+            String sql = "select * from TOVAR where name='" + jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) + "'";
             ResultSet rs = stmt.executeQuery(sql);
             int tovid = 0;
             //while (rs.next()) {
@@ -325,36 +361,28 @@ public class Zakaz extends javax.swing.JFrame {
             stmt.close();
 
             stmt = conn.createStatement();
-            sql = "select * from POST where name='" + jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) + "'";
+            sql = "select * from ZAK where name='" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()) + "'";
             rs = stmt.executeQuery(sql);
             int zakid = rs.getInt("ID");
             stmt.close();
             stmt = conn.createStatement();
-            sql = "select * from SKLAD where name='" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()) + "'";
+            sql = "select * from SKLAD where name='" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()) + "'";
             rs = stmt.executeQuery(sql);
             int skladid = rs.getInt("ID");
             stmt.close();
-            /*
-            stmt = conn.createStatement();
-            sql = "select num from TOVAR where name='" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()) + "' "
-                    + "AND sklad='" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()) + "'";
-            rs = stmt.executeQuery(sql);
-            int num = rs.getInt("num");
-            stmt.close();
-             */
-//if (num > Byte.valueOf(jTextField1.getText())) {
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             String strDate = formatter.format(date);
             stmt = conn.createStatement();
-            sql = "INSERT INTO ZAKAZ ("
+            sql = "INSERT INTO PRODA ("
                     + "ID, "
                     + "TOVID, "
                     + "NUM, "
                     + "SKLADID, "
                     + "DT, "
                     + "ZAKID, "
-                    + "STATUS)"
+                    + "PRICE, "
+                    + "summa)"
                     + "VALUES ("
                     + "NULL, "
                     + tovid + ", '"
@@ -362,7 +390,8 @@ public class Zakaz extends javax.swing.JFrame {
                     + skladid + ", '"
                     + strDate + "', "
                     + zakid + ", "
-                    + "'Заказан')";
+                    + jLabel3.getText() + ", "
+                    + jLabel6.getText() + ")";
             stmt.executeUpdate(sql);
 
             sql = "update TOVAR set num = num - " + jTextField1.getText() + "  where name='" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()) + "'";
@@ -380,24 +409,22 @@ public class Zakaz extends javax.swing.JFrame {
                 System.out.println(ex.getMessage());
             }
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // Удалить заказ
+        // Удалить продажу
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.out.println("Unable to load class.");
             e.printStackTrace();
         }
-
         Connection conn = null;
         try {
             String url = "jdbc:sqlite:base.sqlite";
             conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            String sql = "DELETE from ZAKAZ where ID=" + jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString() + "";
+            String sql = "DELETE from PRODA where ID=" + jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString() + "";
             stmt.executeUpdate(sql);
             filltable();
 
@@ -458,6 +485,51 @@ public class Zakaz extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
+        
+
+    }//GEN-LAST:event_jComboBox1PropertyChange
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+       try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Unable to load class.");
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        try {
+            String url = "jdbc:sqlite:base.sqlite";
+            conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement();
+            String sql = "select * from TOVAR where name='" + jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            jLabel3.setText(rs.getString("PRICE"));
+            
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        Integer i1 = new Integer(jTextField1.getText());
+        Integer i2 = new Integer(jLabel3.getText());
+        Integer i3 = i1*i2;
+        jLabel6.setText(i3.toString());
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -475,20 +547,27 @@ public class Zakaz extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Spisanie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Spisanie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Spisanie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Spisanie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Zakaz().setVisible(true);
+                new Spisanie().setVisible(true);
             }
         });
     }
@@ -504,6 +583,10 @@ public class Zakaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
