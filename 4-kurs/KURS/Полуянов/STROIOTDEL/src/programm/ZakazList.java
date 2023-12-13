@@ -70,13 +70,13 @@ public class ZakazList extends javax.swing.JFrame {
             createtable();
 
             stmt = conn.createStatement();
-            String sql = "select count(*) C from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z, STATUS st WHERE "
-                    + "P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID and st.id = P.status ";
+            String sql = "select count(*) C from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z WHERE "
+                    + "P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID  ";
             ResultSet rs = stmt.executeQuery(sql);
             int rowcount = rs.getInt("C");
-            sql = "select t.id id, T.Name Name, p.num num, s.name sklad, p.dt dtt, z.name zname, st.name w, "
-                    + "p.id zid from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z, STATUS st "
-                    + "WHERE P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID and st.id=P.status ";
+            sql = "select t.id id, T.Name Name, p.num num, s.name sklad, p.dt dtt, z.name zname, 'Активен' W, "
+                    + "p.id zid from ZAKAZ P, TOVAR T, SKLAD S, ZAK Z "
+                    + "WHERE P.ZAKID = Z.ID and P.SKLADID = S.ID and P.TOVID = T.ID ";
             rs = stmt.executeQuery(sql);
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.setRowCount(rowcount);
@@ -328,11 +328,13 @@ public class ZakazList extends javax.swing.JFrame {
             sql = "select * from ZAK where name='" + jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) + "'";
             rs = stmt.executeQuery(sql);
             int zakid = rs.getInt("ID");
+            System.out.println(zakid);
             stmt.close();
             stmt = conn.createStatement();
             sql = "select * from SKLAD where name='" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()) + "'";
             rs = stmt.executeQuery(sql);
             int skladid = rs.getInt("ID");
+            System.out.println(skladid);
             stmt.close();
             /*
             stmt = conn.createStatement();
@@ -346,6 +348,7 @@ public class ZakazList extends javax.swing.JFrame {
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             String strDate = formatter.format(date);
+            System.out.println(strDate);
             stmt = conn.createStatement();
             sql = "INSERT INTO ZAKAZ ("
                     + "ID, "
@@ -363,10 +366,13 @@ public class ZakazList extends javax.swing.JFrame {
                     + strDate + "', "
                     + zakid + ", "
                     + "'Заказан')";
+            System.out.println(sql);
             stmt.executeUpdate(sql);
-
+            stmt.close();
+            stmt = conn.createStatement();
             sql = "update TOVAR set num = num - " + jTextField1.getText() + "  where name='" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()) + "'";
             stmt.executeUpdate(sql);
+            stmt.close();
             filltable();
 
         } catch (SQLException e) {

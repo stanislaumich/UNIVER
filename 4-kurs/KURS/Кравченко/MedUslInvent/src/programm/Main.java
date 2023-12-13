@@ -176,7 +176,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText("Заказчики оборудования");
+        jButton6.setText("Утилизанты оборудования");
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +283,7 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem9);
 
-        jMenuItem10.setText("Заказчики");
+        jMenuItem10.setText("Утилизанты");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);

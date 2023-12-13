@@ -120,7 +120,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&#x417;&#x430;&#x43a;&#x430;&#x437;&#x447;&#x438;&#x43a;&#x438;"/>
+                <Property name="text" type="java.lang.String" value="&#x423;&#x442;&#x438;&#x43b;&#x438;&#x437;&#x430;&#x43d;&#x442;&#x44b;"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>
@@ -278,7 +278,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x417;&#x430;&#x43a;&#x430;&#x437;&#x447;&#x438;&#x43a;&#x438; &#x43e;&#x431;&#x43e;&#x440;&#x443;&#x434;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x44f;"/>
+            <Property name="text" type="java.lang.String" value="&#x423;&#x442;&#x438;&#x43b;&#x438;&#x437;&#x430;&#x43d;&#x442;&#x44b; &#x43e;&#x431;&#x43e;&#x440;&#x443;&#x434;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x44f;"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>

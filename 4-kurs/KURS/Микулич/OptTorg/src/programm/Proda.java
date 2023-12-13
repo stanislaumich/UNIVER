@@ -443,7 +443,7 @@ public class Proda extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         //
-        jTextField1.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
+        jTextField1.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
         //jTextField5.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
         //jTextField3.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 6).toString());
         //jTextField4.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString());
